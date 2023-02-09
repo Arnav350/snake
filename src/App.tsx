@@ -3,55 +3,40 @@ import useInterval from "./useInterval";
 import {
   SIZE,
   SCALE,
-  SPEED,
+  TIME_DELAY,
   DIRECTIONS,
-  START_SNAKE,
-  START_FOOD,
+  INITIAL_SNAKE,
+  INITIAL_FOOD,
 } from "./constants";
 import "./App.css";
 
 function App() {
-  const board = useRef<HTMLDivElement>(null!);
-  const [snake, setSnake] = useState(START_SNAKE);
-  const [food, setFood] = useState(START_FOOD);
-  const [gameOver, setGameOver] = useState(false);
+  const board = useRef<HTMLCanvasElement>(null!);
+  const [snake, setSnake] = useState(INITIAL_SNAKE);
+  const [food, setFood] = useState(INITIAL_FOOD);
   const [direction, setDirection] = useState([0, -1]);
-  const [speed, setSpeed] = useState(null!);
+  const [delay, setDelay] = useState<number>(null!);
+  const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
-  console.log(board);
-
-  if (board.current) {
-    board.current.style.height = `${SIZE[1]}px`;
-    board.current.style.width = `${SIZE[0]}px`;
-  }
-
-  function start() {}
-
-  function end() {}
-
-  function move(event: any) {}
-
-  function spawnFood() {}
-
-  function eatFood() {}
-
-  function crash() {}
-
-  function gameLoop() {}
-
-  useEffect(() => {}, [snake, food, gameOver]);
+  useInterval(() => runGame(), delay);
 
   return (
-    <div>
-      <div
-        role="button"
-        tabIndex={0}
+    <div onKeyDown={(event) => setDirection(event)}>
+      <div></div>
+      <canvas
         className="board"
         ref={board}
-        onKeyDown={(event) => move(event)}
-      ></div>
-      {gameOver && <div>Game Over!</div>}
-      <button onClick={start}>Start</button>
+        height={`${SIZE[1]}px`}
+        width={`${SIZE[0]}px`}
+      />
+      {gameOver && <div className="over">Game Over</div>}
+      <button className="start" onClick={start}>
+        Play
+      </button>
+      <div className="score__container">
+        <h2 className="score">Score: {score}</h2>
+      </div>
     </div>
   );
 }
