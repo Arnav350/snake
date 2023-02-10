@@ -1,11 +1,57 @@
-* {
-  font-family: "Work Sans", sans-serif;
-  padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
+  font-family: 'Press Start 2P', Roboto;
 }
 
 .board {
-  border: 1px solid black;
+  border: 5px solid transparent;
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background-color: gray;
+}
+
+.fruit {
+  display: none;
+  /* width: 30px; */
+  /* height: 30px; */
+  /* background-color: red; */
+}
+
+.over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  color: black;
+  font-size: 35px;
+}
+
+.start {
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  translate: -50% -50%;
+  color: white;
+  background: #502c7b;
+  border: 2px solid white;
+  padding: 10px;
+  font-size: 0.9em;
+  color: white;
+  box-shadow: 4px 4px 0px 0px white;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 5px;
+}
+
+.score {
+  float: right;
+  margin: 30px;
+  margin-top: 50px;
 }
