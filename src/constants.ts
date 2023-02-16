@@ -8,10 +8,13 @@ interface direction {
 export const SIZE: number[] = [512, 512];
 export const SCALE: number = 32;
 export const START_SNAKE: number[][] = [
-  [3, 8],
-  [3, 8],
+  [Math.floor(SIZE[0] / SCALE) / 4, Math.floor(SIZE[0] / SCALE) / 2],
+  [Math.floor(SIZE[0] / SCALE) / 4, Math.floor(SIZE[1] / SCALE) / 2],
 ];
-export const START_FOOD: number[] = [8, 8];
+export const START_FOOD: number[] = [
+  Math.floor(SIZE[0] / SCALE) / 2,
+  Math.floor(SIZE[0] / SCALE) / 2,
+];
 export const DIRECTIONS: direction = {
   LEFT: [-1, 0],
   RIGHT: [1, 0],

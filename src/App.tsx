@@ -13,24 +13,25 @@ import {
 
 function App() {
   const board = useRef<HTMLCanvasElement>(null!);
-  const [snake, setSnake] = useState(START_SNAKE);
-  const [food, setFood] = useState(START_FOOD);
-  const [direction, setDirection] = useState(DIRECTIONS.RIGHT);
-  const [delay, setDelay] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
 
   const up = document.querySelector<HTMLDivElement>(".up")?.style;
   const left = document.querySelector<HTMLDivElement>(".left")?.style;
   const down = document.querySelector<HTMLDivElement>(".down")?.style;
   const right = document.querySelector<HTMLDivElement>(".right")?.style;
 
+  const [snake, setSnake] = useState<number[][]>(START_SNAKE);
+  const [food, setFood] = useState<number[]>(START_FOOD);
+  const [direction, setDirection] = useState<number[]>(DIRECTIONS.RIGHT);
+  const [delay, setDelay] = useState<number | null>(null);
+  const [score, setScore] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+
   useInterval(() => runGame(), delay);
 
   useEffect(() => {
     if (board.current) {
-      const canvas = board.current;
-      const context = canvas.getContext("2d");
+      const canvas: HTMLCanvasElement = board.current;
+      const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
       if (context) {
         context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
         context.clearRect(0, 0, SIZE[0], SIZE[1]);
@@ -61,12 +62,9 @@ function App() {
   }
 
   function start() {
-    START_FOOD[0] = Math.floor((Math.random() * SIZE[0]) / SCALE);
-    START_FOOD[1] = Math.floor((Math.random() * SIZE[1]) / SCALE);
-
     setSnake(START_SNAKE);
     setFood(START_FOOD);
-    setDirection([1, 0]);
+    setDirection(DIRECTIONS.RIGHT);
     setDelay(DELAY);
     setScore(0);
     setGameOver(false);
@@ -74,7 +72,7 @@ function App() {
   }
 
   function checkCollision(head: number[]) {
-    for (let i = 0; i < head.length; i++) {
+    for (let i: number = 0; i < head.length; i++) {
       if (head[i] < 0 || head[i] * SCALE >= SIZE[0]) return true;
     }
     for (const s of snake) {
@@ -84,7 +82,9 @@ function App() {
   }
 
   function foodAte(newSnake: number[][]) {
-    let coord = food.map(() => Math.floor((Math.random() * SIZE[0]) / SCALE));
+    let coord: number[] = food.map(() =>
+      Math.floor((Math.random() * SIZE[0]) / SCALE)
+    );
     if (newSnake[0][0] === food[0] && newSnake[0][1] === food[1]) {
       let newFood = coord;
       setScore(score + 1);
@@ -97,18 +97,22 @@ function App() {
   function changeDirection(event: React.KeyboardEvent<HTMLDivElement>) {
     resetArrows();
     switch (event.key) {
+      case "a":
       case "ArrowLeft":
         setDirection(DIRECTIONS.LEFT);
         if (left) left.background = "#ff0000";
         break;
+      case "d":
       case "ArrowRight":
         setDirection(DIRECTIONS.RIGHT);
         if (right) right.background = "#ff0000";
         break;
+      case "w":
       case "ArrowUp":
         setDirection(DIRECTIONS.UP);
         if (up) up.background = "#ff0000";
         break;
+      case "s":
       case "ArrowDown":
         setDirection(DIRECTIONS.DOWN);
         if (down) down.background = "#ff0000";
