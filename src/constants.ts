@@ -5,13 +5,13 @@ interface direction {
   DOWN: number[];
 }
 
-export const SIZE: number[] = [1000, 1000];
-export const SCALE: number = 50;
+export const SIZE: number[] = [512, 512];
+export const SCALE: number = 32;
 export const START_SNAKE: number[][] = [
-  [4, 10],
-  [4, 10],
+  [3, 8],
+  [3, 8],
 ];
-export const START_FOOD: number[] = [10, 10];
+export const START_FOOD: number[] = [8, 8];
 export const DIRECTIONS: direction = {
   LEFT: [-1, 0],
   RIGHT: [1, 0],

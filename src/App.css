@@ -1,57 +1,135 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Press Start 2P', Roboto;
 }
 
-.board {
-  border: 5px solid transparent;
-  width: 500px;
-  height: 500px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  background-color: gray;
+body {
+  background-color: black;
 }
 
-.fruit {
-  display: none;
-  /* width: 30px; */
-  /* height: 30px; */
-  /* background-color: red; */
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.over {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  color: black;
-  font-size: 35px;
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
 }
 
-.start {
-  position: fixed;
-  top: 90%;
-  left: 50%;
-  translate: -50% -50%;
-  color: white;
-  background: #502c7b;
-  border: 2px solid white;
-  padding: 10px;
-  font-size: 0.9em;
-  color: white;
-  box-shadow: 4px 4px 0px 0px white;
-  font-family: 'Press Start 2P', cursive;
-  letter-spacing: 5px;
+.logo {
+  color: red;
+  font-size: 64px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  display: flex;
+  padding: 4px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.lives {
+  color: blue;
 }
 
 .score {
-  float: right;
-  margin: 30px;
-  margin-top: 50px;
+  color: greenyellow;
+}
+
+.board {
+  width: 516px;
+  height: 516px;
+  background-color: black;
+  border: 32px solid white;
+}
+
+.over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  color: red;
+  font-size: 42px;
+}
+
+.start {
+  margin: 0 32px;
+  height: 128px;
+  width: 128px;
+  background-color: #c00000;
+  color: #f8f8f8;
+  border: none;
+  outline: none;
+  line-height: 20px;
+  letter-spacing: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.start:hover {
+  scale: 1.1;
+}
+
+.start:active {
+  background-color: #ff0000;
+  scale: 0.9;
+}
+
+.arrows {
+  height: 128px;
+  width: 192px;
+  gap: 4px;
+  display: grid;
+  grid-template-areas:
+    ". up ."
+    "left down right";
+}
+
+.left,
+.right,
+.up,
+.down {
+
+  background-color: #c00000;
+  transition: all 100ms ease;
+}
+
+.left {
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+}
+
+.up {
+  grid-area: up;
+}
+
+.down {
+  grid-area: down;
 }

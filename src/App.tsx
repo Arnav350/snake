@@ -20,10 +20,14 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
+  const up = document.querySelector<HTMLDivElement>(".up")?.style;
+  const left = document.querySelector<HTMLDivElement>(".left")?.style;
+  const down = document.querySelector<HTMLDivElement>(".down")?.style;
+  const right = document.querySelector<HTMLDivElement>(".right")?.style;
+
   useInterval(() => runGame(), delay);
 
   useEffect(() => {
-    let fruit = document.querySelector(".fruit") as HTMLCanvasElement;
     if (board.current) {
       const canvas = board.current;
       const context = canvas.getContext("2d");
@@ -32,7 +36,8 @@ function App() {
         context.clearRect(0, 0, SIZE[0], SIZE[1]);
         context.fillStyle = "#a3d001";
         snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
-        context.drawImage(fruit, food[0], food[1], 1, 1);
+        context.fillStyle = "#e05151";
+        context.fillRect(food[0], food[1], 1, 1);
       }
     }
   }, [snake, food, gameOver]);
@@ -47,6 +52,7 @@ function App() {
     if (checkCollision(newSnakeHead)) {
       setDelay(null);
       setGameOver(true);
+      resetArrows();
     }
     if (!foodAte(newSnake)) {
       newSnake.pop();
@@ -64,6 +70,7 @@ function App() {
     setDelay(DELAY);
     setScore(0);
     setGameOver(false);
+    resetArrows();
   }
 
   function checkCollision(head: number[]) {
@@ -88,38 +95,64 @@ function App() {
   }
 
   function changeDirection(event: React.KeyboardEvent<HTMLDivElement>) {
+    resetArrows();
     switch (event.key) {
       case "ArrowLeft":
         setDirection(DIRECTIONS.LEFT);
+        if (left) left.background = "#ff0000";
         break;
       case "ArrowRight":
         setDirection(DIRECTIONS.RIGHT);
+        if (right) right.background = "#ff0000";
         break;
       case "ArrowUp":
         setDirection(DIRECTIONS.UP);
+        if (up) up.background = "#ff0000";
         break;
       case "ArrowDown":
         setDirection(DIRECTIONS.DOWN);
+        if (down) down.background = "#ff0000";
         break;
     }
   }
 
+  function resetArrows() {
+    if (left && right && up && down) {
+      left.background = "#c00000";
+      right.background = "#c00000";
+      up.background = "#c00000";
+      down.background = "#c00000";
+    }
+  }
+
   return (
-    <div onKeyDown={(event) => changeDirection(event)}>
-      <img className="fruit" src={AppleLogo} alt="fruit" width="30" />
-      {/* <div className="fruit"></div> */}
-      <canvas
-        className="board"
-        ref={board}
-        width={`${SIZE[0]}px`}
-        height={`${SIZE[1]}px`}
-      />
-      {gameOver && <div className="over">Game Over</div>}
-      <button className="start" onClick={start}>
-        PLAY
-      </button>
-      <div className="score">
-        <h2>Score: {score}</h2>
+    <div className="game" onKeyDown={(event) => changeDirection(event)}>
+      <div className="top">
+        <div className="logo">SNAKE</div>
+      </div>
+      <div className="content">
+        <button className="start" onClick={start}>
+          PRESS to PLAY
+        </button>
+        <div className="screen">
+          <div className="info">
+            <h2 className="lives">Lives: 1</h2>
+            <h2 className="score">Score: {score}</h2>
+          </div>
+          <canvas
+            className="board"
+            ref={board}
+            width={`${SIZE[0]}px`}
+            height={`${SIZE[1]}px`}
+          />
+          {gameOver && <div className="over">Game Over</div>}
+        </div>
+        <div className="arrows">
+          <div className="left"></div>
+          <div className="right"></div>
+          <div className="up"></div>
+          <div className="down"></div>
+        </div>
       </div>
     </div>
   );
