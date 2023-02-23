@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
-import AppleLogo from "./applePixels.png";
 import useInterval from "./useInterval";
 import {
   SIZE,
@@ -130,7 +129,12 @@ function App() {
   }
 
   return (
-    <div className="game" onKeyDown={(event) => changeDirection(event)}>
+    <div
+      className="game"
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) =>
+        changeDirection(event)
+      }
+    >
       <div className="top">
         <div className="logo">SNAKE</div>
       </div>
