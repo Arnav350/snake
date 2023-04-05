@@ -7,20 +7,16 @@ import {
   START_SNAKE,
   START_FOOD,
   DIRECTIONS,
-  DELAY,
+  SPEED,
 } from "./constants";
 
 function App() {
   const board = useRef<HTMLCanvasElement>(null!);
 
-  const up = document.querySelector<HTMLDivElement>(".up")?.style;
-  const left = document.querySelector<HTMLDivElement>(".left")?.style;
-  const down = document.querySelector<HTMLDivElement>(".down")?.style;
-  const right = document.querySelector<HTMLDivElement>(".right")?.style;
-
   const [snake, setSnake] = useState<number[][]>(START_SNAKE);
   const [food, setFood] = useState<number[]>(START_FOOD);
-  const [direction, setDirection] = useState<number[]>(DIRECTIONS.RIGHT);
+  const [direction, setDirection] = useState<number[]>(DIRECTIONS.NONE);
+  const [speed, setSpeed] = useState<number>(SPEED[1]);
   const [delay, setDelay] = useState<number | null>(null);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
@@ -52,7 +48,7 @@ function App() {
     if (checkCollision(newSnakeHead)) {
       setDelay(null);
       setGameOver(true);
-      resetArrows();
+      setDirection(DIRECTIONS.NONE);
     }
     if (!foodAte(newSnake)) {
       newSnake.pop();
@@ -64,10 +60,9 @@ function App() {
     setSnake(START_SNAKE);
     setFood(START_FOOD);
     setDirection(DIRECTIONS.RIGHT);
-    setDelay(DELAY);
+    setDelay(speed);
     setScore(0);
     setGameOver(false);
-    resetArrows();
   }
 
   function checkCollision(head: number[]) {
@@ -94,37 +89,25 @@ function App() {
   }
 
   function changeDirection(event: React.KeyboardEvent<HTMLDivElement>) {
-    resetArrows();
-    switch (event.key) {
-      case "a":
-      case "ArrowLeft":
-        setDirection(DIRECTIONS.LEFT);
-        if (left) left.background = "#ff0000";
-        break;
-      case "d":
-      case "ArrowRight":
-        setDirection(DIRECTIONS.RIGHT);
-        if (right) right.background = "#ff0000";
-        break;
-      case "w":
-      case "ArrowUp":
-        setDirection(DIRECTIONS.UP);
-        if (up) up.background = "#ff0000";
-        break;
-      case "s":
-      case "ArrowDown":
-        setDirection(DIRECTIONS.DOWN);
-        if (down) down.background = "#ff0000";
-        break;
-    }
-  }
-
-  function resetArrows() {
-    if (left && right && up && down) {
-      left.background = "#c00000";
-      right.background = "#c00000";
-      up.background = "#c00000";
-      down.background = "#c00000";
+    if (!gameOver) {
+      switch (event.key) {
+        case "a":
+        case "ArrowLeft":
+          setDirection(DIRECTIONS.LEFT);
+          break;
+        case "d":
+        case "ArrowRight":
+          setDirection(DIRECTIONS.RIGHT);
+          break;
+        case "w":
+        case "ArrowUp":
+          setDirection(DIRECTIONS.UP);
+          break;
+        case "s":
+        case "ArrowDown":
+          setDirection(DIRECTIONS.DOWN);
+          break;
+      }
     }
   }
 
@@ -139,9 +122,34 @@ function App() {
         <div className="logo">SNAKE</div>
       </div>
       <div className="content">
-        <button className="start" onClick={start}>
-          PRESS to PLAY
-        </button>
+        <div className="buttons">
+          <div className="speeds">
+            <button
+              className="speed"
+              onClick={() => setSpeed(SPEED[0])}
+              style={speed === SPEED[0] ? { backgroundColor: "#f00" } : {}}
+            >
+              SLOW
+            </button>
+            <button
+              className="speed"
+              onClick={() => setSpeed(SPEED[1])}
+              style={speed === SPEED[1] ? { backgroundColor: "#f00" } : {}}
+            >
+              MID
+            </button>
+            <button
+              className="speed"
+              onClick={() => setSpeed(SPEED[2])}
+              style={speed === SPEED[2] ? { backgroundColor: "#f00" } : {}}
+            >
+              FAST
+            </button>
+          </div>
+          <button className="start" onClick={start}>
+            PRESS to PLAY
+          </button>
+        </div>
         <div className="screen">
           <div className="info">
             <h2 className="lives">Lives: 1</h2>
@@ -156,10 +164,30 @@ function App() {
           {gameOver && <div className="over">Game Over</div>}
         </div>
         <div className="arrows">
-          <div className="left"></div>
-          <div className="right"></div>
-          <div className="up"></div>
-          <div className="down"></div>
+          <div
+            className="left"
+            style={
+              direction === DIRECTIONS.LEFT ? { backgroundColor: "#f00" } : {}
+            }
+          ></div>
+          <div
+            className="right"
+            style={
+              direction === DIRECTIONS.RIGHT ? { backgroundColor: "#f00" } : {}
+            }
+          ></div>
+          <div
+            className="up"
+            style={
+              direction === DIRECTIONS.UP ? { backgroundColor: "#f00" } : {}
+            }
+          ></div>
+          <div
+            className="down"
+            style={
+              direction === DIRECTIONS.DOWN ? { backgroundColor: "#f00" } : {}
+            }
+          ></div>
         </div>
       </div>
     </div>

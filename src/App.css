@@ -8,7 +8,7 @@
 }
 
 body {
-  background-color: black;
+  background-color: #000;
 }
 
 .game {
@@ -26,7 +26,7 @@ body {
 }
 
 .logo {
-  color: red;
+  color: #d00;
   font-size: 64px;
 }
 
@@ -52,18 +52,18 @@ body {
 }
 
 .lives {
-  color: blue;
+  color: #00d;
 }
 
 .score {
-  color: greenyellow;
+  color: #8d0;
 }
 
 .board {
   width: 516px;
   height: 516px;
-  background-color: black;
-  border: 32px solid white;
+  background-color: #111;
+  border: 32px solid #ddd;
 }
 
 .over {
@@ -71,20 +71,46 @@ body {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  color: red;
+  color: #d00;
   font-size: 42px;
 }
 
-.start {
-  margin: 0 32px;
-  height: 128px;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 192px;
+}
+
+.speeds {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.speed {
+  padding: 12px 8px;
   width: 128px;
-  background-color: #c00000;
+  font-size: 16px;
+  background-color: #800;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #f8f8f8;
+  cursor: pointer;
+}
+
+.start {
+  height: 160px;
+  width: 160px;
+  background-color: #a00;
   color: #f8f8f8;
   border: none;
   outline: none;
+  font-size: 18px;
   line-height: 20px;
-  letter-spacing: 6px;
+  letter-spacing: 3px;
   border-radius: 50%;
   cursor: pointer;
   transition: all 200ms ease;
@@ -95,7 +121,7 @@ body {
 }
 
 .start:active {
-  background-color: #ff0000;
+  background-color: #f00;
   scale: 0.9;
 }
 
@@ -113,9 +139,8 @@ body {
 .right,
 .up,
 .down {
-
-  background-color: #c00000;
-  transition: all 100ms ease;
+  background-color: #800;
+  transition: all 150ms ease;
 }
 
 .left {
